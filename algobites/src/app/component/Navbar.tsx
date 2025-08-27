@@ -9,11 +9,17 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 
-const Navbar = () => {
+const Navbar = ({ gap }: { gap: "small" | "medium" }) => {
   return (
-    <nav className="flex justify-between items-center px-6 py-3 shadow-md bg-[#1D1C20] rounded-lg border-[1] border-gray-700 sm:mx-6 md:mx-12 lg:mx-32 sm:my-4 md:my-6 lg:my-8">
+    <nav
+      className={`bg-primary my-2 flex items-center justify-between rounded-lg border-[1] border-gray-700 px-6 py-3 shadow-md sm:my-4 md:my-6 lg:my-8 ${
+        gap == "medium"
+          ? "mx-2 sm:mx-6 md:mx-12 lg:mx-32"
+          : "mx-2 sm:mx-3 md:mx-6 lg:mx-12"
+      }`}
+    >
       {/* Brand */}
-      <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#EA763F] to-[#4e2714] tracking-wide">
+      <div className="from-shade1 to-shade2 bg-gradient-to-r bg-clip-text text-2xl font-bold tracking-wide text-transparent select-none">
         Algobites
       </div>
 
@@ -22,12 +28,12 @@ const Navbar = () => {
         {/* If not logged in */}
         <SignedOut>
           <SignInButton>
-            <button className="px-4 py-2 cursor-pointer rounded-md text-white hover:bg-[#3c3a42] transition">
+            <button className="hover:bg-secondary cursor-pointer rounded-md px-4 py-2 text-white transition">
               Sign In
             </button>
           </SignInButton>
           <SignUpButton>
-            <button className="px-4 py-2 cursor-pointer rounded-md text-white hover:bg-[#3c3a42] transition">
+            <button className="hover:bg-secondary cursor-pointer rounded-md px-4 py-2 text-white transition">
               Sign Up
             </button>
           </SignUpButton>
@@ -35,7 +41,7 @@ const Navbar = () => {
         {/* If logged in */}
         <SignedIn>
           <SignOutButton>
-            <button className="px-4 py-2 cursor-pointer rounded-md text-white hover:bg-[#3c3a42] transition">
+            <button className="hover:bg-secondary cursor-pointer rounded-md px-4 py-2 text-white transition">
               Logout
             </button>
           </SignOutButton>
@@ -47,5 +53,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-//  from-[#EA763F] to-[#482412]

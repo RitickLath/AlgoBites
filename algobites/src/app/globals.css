@@ -8,6 +8,14 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  /* Gray Shade */
+  --color-primary: #1d1c20;
+  --color-secondary: #3c3a42;
+
+  /* Red Shade */
+  --color-shade1: #ea763f;
+  --color-shade2: #4e2714;
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
