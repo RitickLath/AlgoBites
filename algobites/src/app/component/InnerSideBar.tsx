@@ -17,7 +17,7 @@ const InnerSideBar = ({
   const pathname = usePathname();
 
   function handleClick() {
-    setIsOpen(!isOpen);
+    if (pathname.startsWith("/notes")) setIsOpen(!isOpen);
   }
 
   return (

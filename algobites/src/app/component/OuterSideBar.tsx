@@ -1,69 +1,49 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { IoDocumentTextOutline } from "react-icons/io5";
-import { dashboardMenu } from "../constant/dashboardMenu";
-import { notesMenu } from "../constant/notesMenu";
-import { practiceMenu } from "../constant/practiceMenu";
+import axios from "axios";
+import SingleMenu from "./SingleMenu";
 
-const OuterSideBar = ({ isOpen }: { isOpen: boolean }) => {
+interface Topic {
+  id: string;
+  title: string;
+}
+
+const OuterSideBar = ({
+  isOpen,
+  setIsOpen,
+}: {
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
   const pathname = usePathname();
+  const [topicList, setTopicList] = useState<Topic[]>([]);
+
+  const fetchNotes = async () => {
+    const response = await axios.get("/api/topics");
+    setTopicList(response.data);
+  };
+
+ 
+
+  useEffect(() => {
+    fetchNotes();
+  }, [pathname]);
 
   if (!isOpen) return null;
 
+  if (!pathname.startsWith("/notes")) setIsOpen(false);
+
   return (
-    <aside className="bg-primary flex h-screen w-[200px] flex-col justify-between py-8 shadow-lg">
-      {/* Dynamic Navigation Items */}
+    <aside className="bg-primary flex h-screen overflow-y-scroll w-[250px] flex-col justify-between py-8 shadow-lg">
       <nav className="mt-10 flex flex-1 flex-col gap-3 px-4">
-        <>
-          {pathname.startsWith("/notes") &&
-            notesMenu.map(({ name, href }) => (
-              <Link
-                key={name}
-                href={href}
-                className={`flex items-center gap-3 rounded-xl px-4 py-2 transition-all ${
-                  pathname === href
-                    ? "bg-secondary text-shade1 font-semibold"
-                    : "hover:bg-secondary text-gray-200 hover:text-white"
-                }`}
-              >
-                <IoDocumentTextOutline className="text-lg" />
-                <span className="text-sm">{name}</span>
-              </Link>
-            ))}
-          {pathname.startsWith("/practice") &&
-            practiceMenu.map(({ name, href }) => (
-              <Link
-                key={name}
-                href={href}
-                className={`flex items-center gap-3 rounded-xl px-4 py-2 transition-all ${
-                  pathname === href
-                    ? "bg-secondary text-shade1 font-semibold"
-                    : "hover:bg-secondary text-gray-200 hover:text-white"
-                }`}
-              >
-                <IoDocumentTextOutline className="text-lg" />
-                <span className="text-sm">{name}</span>
-              </Link>
-            ))}
-          {pathname.startsWith("/dashboard") &&
-            dashboardMenu.map(({ name, href }) => (
-              <Link
-                key={name}
-                href={href}
-                className={`flex items-center gap-3 rounded-xl px-4 py-2 transition-all ${
-                  pathname === href
-                    ? "bg-secondary text-shade1 font-semibold"
-                    : "hover:bg-secondary text-gray-200 hover:text-white"
-                }`}
-              >
-                <IoDocumentTextOutline className="text-lg" />
-                <span className="text-sm">{name}</span>
-              </Link>
-            ))}
-        </>
+        {topicList.length > 0 &&
+          topicList.map((ele) => (
+            <>
+              <SingleMenu id={ele.id} title={ele.title} />
+            </>
+          ))}
       </nav>
     </aside>
   );
