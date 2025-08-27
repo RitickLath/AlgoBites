@@ -10,7 +10,7 @@ const MainSideBar = () => {
   return (
     <div className="flex">
       <InnerSideBar isOpen={isOpen} setIsOpen={setIsOpen} />
-      <OuterSideBar isOpen={isOpen}  />
+      <OuterSideBar isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 };
