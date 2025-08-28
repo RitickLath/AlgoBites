@@ -25,8 +25,6 @@ const OuterSideBar = ({
     setTopicList(response.data);
   };
 
- 
-
   useEffect(() => {
     fetchNotes();
   }, [pathname]);
@@ -36,8 +34,8 @@ const OuterSideBar = ({
   if (!pathname.startsWith("/notes")) setIsOpen(false);
 
   return (
-    <aside className="bg-primary flex h-screen overflow-y-scroll w-[250px] flex-col justify-between py-8 shadow-lg">
-      <nav className="mt-10 flex flex-1 flex-col gap-3 px-4">
+    <aside className="bg-primary flex h-screen w-[250px] flex-col justify-between overflow-y-scroll py-8 shadow-lg">
+      <nav className="mt-10 flex w-[250px] flex-1 flex-col gap-3 px-4">
         {topicList.length > 0 &&
           topicList.map((ele) => (
             <>
