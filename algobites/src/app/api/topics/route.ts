@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
 import { Client } from "@notionhq/client";
 import { NextRequest } from "next/server";
 
@@ -14,9 +11,12 @@ const DSAMASTERY = async (dsaMastry: string) => {
   const blockId = dsaMastry || "131e57a2fb55806fb413f66583a96a53";
   const response = await notion.blocks.children.list({ block_id: blockId });
 
+   
   const pages = response.results
-    .filter((b) => b.type === "child_page")
-    .map((b) => ({ id: b.id, title: b.child_page.title }));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .filter((b:any) => b.type === "child_page")
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .map((b:any) => ({ id: b.id, title: b.child_page.title }));
 
   return pages;
 };
@@ -32,7 +32,8 @@ const SUBPAGES = async (subPage?: string) => {
     [];
 
   for (let i = 0; i < response.results.length; i++) {
-    const block = response.results[i];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const block:any = response.results[i];
 
     if (block.type === "heading_2") {
       // collect heading text
